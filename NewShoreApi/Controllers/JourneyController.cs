@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,22 @@ namespace Api.Controllers
     [ApiController]
     public class JourneyController : ControllerBase
     {
-        // GET: api/<JourneyController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IJourneyServices journeyServices;
+
+        public JourneyController(IJourneyServices journeyServices)
         {
-            return new string[] { "value1", "value2" };
+            this.journeyServices = journeyServices;
         }
 
-        // GET api/<JourneyController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // POST api/<JourneyController>/origin/destination/route
+        [HttpGet("{origin}/{destination}/{route}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Get(string origin,string destination,int route)
         {
-            return "value";
+            var result = await journeyServices.Get(origin, destination, route);
+            if (result != null) return Ok(result);
+            return NotFound(result);
         }
 
-        // POST api/<JourneyController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<JourneyController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<JourneyController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

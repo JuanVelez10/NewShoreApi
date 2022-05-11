@@ -10,9 +10,11 @@ namespace Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IAccountServices, AccountServices>();
-            services.AddTransient<IMessageServices, MessageServices>();
-
+            services
+                .AddTransient<IJourneyServices, JourneyServices>()
+                .AddTransient<IAccountServices, AccountServices>()
+                .AddTransient<IMessageServices, MessageServices>();
+            
             return services;
         }
 
