@@ -4,6 +4,9 @@ namespace Domain.Entities
 {
     public class Store
     {
+        [Key]
+        [Required]
+        public Guid? Id { get; set; }
         [Required]
         [DataType(DataType.Text)]
         public string? Origin { get; set; }

@@ -14,9 +14,10 @@ namespace Persistence
             services.AddDbContext<NewshoreContext>(options => options.UseSqlServer(configuration.GetConnectionString("NewshoreDB"), b => b.MigrationsAssembly("Api")));
 
             services
+                .AddTransient<IStoreRepository, StoreRepository>()
                 .AddTransient<IAccountRepository, AccountRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>();
-
+            
             return services;
         }
 
