@@ -25,7 +25,6 @@ namespace Infrastructure.Services.Integration
 
         private string Get(int route)
         {
-            using var client = new HttpClient();
             var response = client.GetAsync(credential.Url + route).Result;
             var result = response.Content.ReadAsStringAsync();
             return result.Result;
