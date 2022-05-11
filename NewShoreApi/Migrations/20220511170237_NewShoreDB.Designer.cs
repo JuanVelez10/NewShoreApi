@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.DataBase;
 
@@ -11,9 +12,10 @@ using Persistence.DataBase;
 namespace Api.Migrations
 {
     [DbContext(typeof(NewshoreContext))]
-    partial class NewshoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220511170237_NewShoreDB")]
+    partial class NewShoreDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,6 +14,8 @@ namespace Domain.Entities
         [DataType(DataType.Text)]
         public string? Destination { get; set; }
         [Required]
+        public int Route { get; set; }
+        [Required]
         [DataType(DataType.Text)]
         public string? Response { get; set; }
         [Required]
