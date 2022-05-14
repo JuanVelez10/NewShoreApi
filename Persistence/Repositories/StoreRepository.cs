@@ -25,7 +25,9 @@ namespace Persistence.Repositories
                 try
                 {
                     store.Id = Guid.NewGuid();
-
+                    var date = DateTime.Now;
+                    store.Create = date;
+                    store.Update = date;
                     dbContext.Store.Add(store);
 
                     dbContext.SaveChanges();
