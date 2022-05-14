@@ -40,8 +40,8 @@ namespace Application.Services
                jourynes.AddRange(GetJourneys(flights, routes_return, destination, origin));
             }
 
-            NewStore(origin, destination, route, jourynes);
-
+            if (jourynes.Any()) NewStore(origin, destination, route, jourynes);
+            
             response = MessageResponse(1, MessageType.Success, "Journeys");
             response.Data = jourynes;
 
@@ -91,38 +91,46 @@ namespace Application.Services
 
             var flihtsFind = flights.Where(x => x.Origin == origin);
 
+            var route = new List<string>();
+            route.Add(origin);
+
             foreach (var fliht in flihtsFind)
             {
-                var route = GetRoute(flights, new List<string>(), fliht.Origin, fliht.Destination,origin,destination);
-                if (route.Any()) routes.Add(route); 
+                GetRoute(routes, route, flights, fliht.Destination,origin, destination); 
             }
 
             return routes;
         }
 
         //Method for calculating recursive routes
-        private List<string> GetRoute(List<Flight> flights,List<string> route, string origin, string destination,string originInitial,string destinationInitial)
+        private void GetRoute(List<List<string>> routes, List<string> route, List<Flight> flights, string origin, string originInitial, string destinationInitial)
         {
-            route.Add(origin);
 
-            if (destination == destinationInitial)
+            if (origin == destinationInitial)
             {
-                route.Add(destination);
+                route.Add(origin);
             }
             else
             {
-                var flihtsFind = flights.Where(x => x.Origin == destination);
+                var flihtsFind = flights.Where(x => x.Origin == origin);
 
                 foreach (var fliht in flihtsFind)
                 {
                     if (!route.Contains(fliht.Origin))
-                        GetRoute(flights, route, fliht.Origin, fliht.Destination, originInitial, destinationInitial);
+                    {
+                        route.Add(origin);
+                        var newRoute = new List<string>();
+                        newRoute.AddRange(route);
+                        GetRoute(routes, newRoute, flights,fliht.Destination, originInitial, destinationInitial);
+                        route.Remove(origin);
+                    }
+                     
                 }
 
             }
 
-            if (route.Any() && route.First() == originInitial && route.Last() != destinationInitial) route.Remove(origin);
-            return route;
+            if (route.Any() && route.First() == originInitial && route.Last() == destinationInitial) routes.Add(route);
+
         }
 
         //Method Validate if the route already exists in store and return it if it exists
