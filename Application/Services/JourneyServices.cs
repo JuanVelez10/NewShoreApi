@@ -40,11 +40,18 @@ namespace Application.Services
                jourynes.AddRange(GetJourneys(flights, routes_return, destination, origin));
             }
 
-            if (jourynes.Any()) NewStore(origin, destination, route, jourynes);
+            if (jourynes.Any()) 
+            {
+                NewStore(origin, destination, route, jourynes);
+                response = MessageResponse(1, MessageType.Success, "Journeys");
+                response.Data = jourynes;
+            }
+            else
+            {
+                response = MessageResponse(3, MessageType.Error, "Journeys");
+                response.Data = jourynes;
+            }
             
-            response = MessageResponse(1, MessageType.Success, "Journeys");
-            response.Data = jourynes;
-
             return response;
         }
 
