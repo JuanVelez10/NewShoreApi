@@ -32,17 +32,30 @@ namespace Application.Services
             var flights = newshoreAirServices.GetFlights(route);
 
             var routes = GetAllRoutes(flights,origin, destination);
-            
-            if (route == 2) routes.AddRange(GetAllRoutes(flights, destination,origin));
-
             var jourynes = GetJourneys(flights, routes, origin, destination);
 
-            //Guardar en store
+            if (route == 2) {
+               var routes_return =  GetAllRoutes(flights, destination, origin);
+               jourynes.AddRange(GetJourneys(flights, routes_return, destination, origin));
+            }
+
+            NewStore(origin, destination, route, jourynes);
 
             response = MessageResponse(1, MessageType.Success, "Journeys");
             response.Data = jourynes;
 
             return response;
+        }
+
+        //Method new store
+        private void NewStore(string origin, string destination, int route, List<Journey> journeys)
+        {
+            var store = new Store();
+            store.Origin = origin;
+            store.Destination = destination;
+            store.Route = route;
+            store.Response = JsonConvert.SerializeObject(journeys);
+            storeRepository.Insert(store);
         }
 
         //Method to calculate and return trips by routes
@@ -119,7 +132,7 @@ namespace Application.Services
           
             if (store != null && !string.IsNullOrEmpty(store.Response))
             {
-                response = MessageResponse(1, MessageType.Success, "Bill");
+                response = MessageResponse(1, MessageType.Success, "Journeys");
                 response.Data = JsonConvert.DeserializeObject<List<Journey>>(store.Response);
             }
 
