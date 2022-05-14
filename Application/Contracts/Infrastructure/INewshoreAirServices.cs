@@ -1,9 +1,9 @@
-﻿using Domain.References;
+﻿using Domain.Entities;
 
 namespace Application.Contracts.Infrastructure
 {
     public interface INewshoreAirServices
     {
-        public List<FlightsNewshoreAirResponse> GetFlights(int route);
+        public List<Flight> GetFlights(int route);
     }
 }

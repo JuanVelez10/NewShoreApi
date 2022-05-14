@@ -13,8 +13,6 @@ namespace Domain.Entities
         [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        [Required]
-        public Guid? TransportId { get; set; }
         public virtual Transport? Transport { get; set; }
     }
 }

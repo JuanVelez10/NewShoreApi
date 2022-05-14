@@ -13,7 +13,7 @@ namespace Domain.Entities
         [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        public ICollection<Flight>? Flights { get; set; }
+        public List<Flight>? Flights { get; set; }
 
     }
 }
