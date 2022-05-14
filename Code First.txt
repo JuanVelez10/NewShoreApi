@@ -1,0 +1,8 @@
+Code First
+ Initial:
+	Add-Migration InitialCreate
+	Update-Database
+ Update: 
+	Add-Migration
+	NewshoreDB
+	Update-Database

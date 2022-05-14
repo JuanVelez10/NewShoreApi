@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "85ffa773-5107-4f31-8229-f6659d20c6ce",
+		"name": "NewShore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"if (jsonData && jsonData.data.token) {    \r",
+									"    pm.globals.set(\"TOKEN\", jsonData.data.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"juan@gmail.com\",\r\n  \"Password\": \"Junio05+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7212/api/Account/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7212",
+							"path": [
+								"api",
+								"Account",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logged",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7212/api/Account/Logged",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7212",
+							"path": [
+								"api",
+								"Account",
+								"Logged"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Journey",
+			"item": [
+				{
+					"name": "Journey",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7212/api/Journey/MZL/CAN/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7212",
+							"path": [
+								"api",
+								"Journey",
+								"MZL",
+								"CAN",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
